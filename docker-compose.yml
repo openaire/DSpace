@@ -28,6 +28,7 @@ services:
       # from the host machine. This IP range MUST correspond to the 'dspacenet' subnet defined above.
       proxies__P__trusted__P__ipranges: '172.23.0'
       LOGGING_CONFIG: /dspace/config/log4j2-container.xml
+      CATALINA_OPTS: -Xmx2000m -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
     image: "${DOCKER_REGISTRY:-docker.io}/${DOCKER_OWNER:-dspace}/dspace:${DSPACE_VER:-dspace-7_x-test}"
     build:
       context: .
@@ -43,6 +44,7 @@ services:
       target: 8009
     - published: 8000
       target: 8000
+    - "5005:5005"
     stdin_open: true
     tty: true
     volumes:
